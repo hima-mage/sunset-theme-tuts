@@ -6,38 +6,63 @@
  * ======================================
  */
 function sunset_load_admin_scripts($hook){
-    
-    //  check if i was on the sunset-them page
-    if('toplevel_page_sunset_options' != $hook){
-        return;
-    }
 
-    //  register sunset_admin css file
-    wp_register_style( 
-                    'sunset_admin', // name of the stylesheet which should be unique
-                    get_template_directory_uri() . '/css/sunset.admin.css', // URL to the stylesheet
-                    [], // this deps para define any stylesheet that file depend on
-                    '1.0.0', // this version num
-                    'all'  // define the media that file support
-                );
+    //   check if i was on the sunset-them page
+    if('toplevel_page_sunset_options' == $hook){  
 
-    // Enqueue a sunset_admin stylesheet.
-    wp_enqueue_style( 'sunset_admin');
+        //  register sunset_admin css file
+        wp_register_style( 
+            'sunset_admin', // name of the stylesheet which should be unique
+            get_template_directory_uri() . '/css/sunset.admin.css', // URL to the stylesheet
+            [], // this deps para define any stylesheet that file depend on
+            '1.0.0', // this version num
+            'all'  // define the media that file support
+        );
 
-    // Enqueues all scripts, styles, settings, and templates necessary to use all media JavaScript APIs.  
-    wp_enqueue_media();
+        // Enqueue a sunset_admin stylesheet.
+        wp_enqueue_style('sunset_admin');
 
-    //  register the sunset-admin-script script to use it 
-    wp_register_script( 
-                    'sunset-admin-script', // name of the script
-                    get_template_directory_uri(  ) . '/js/sunset.admin.js',// URL to the script
-                    ['jquery'],// this deps para define any script that file depend on
-                    '1.0.0',// this version num
-                    true // in footer
-                );
+        // Enqueues all scripts, styles, settings, and templates necessary to use all media JavaScript APIs.  
+        wp_enqueue_media();
 
-    // Enqueue a sunset-admin-script script.            
-    wp_enqueue_script( 'sunset-admin-script');         
+        //  register the sunset-admin-script script to use it 
+        wp_register_script( 
+            'sunset-admin-script', // name of the script
+            get_template_directory_uri(  ) . '/js/sunset.admin.js',// URL to the script
+            ['jquery'],// this deps para define any script that file depend on
+            '1.0.0',// this version num
+            true // in footer
+        );
+
+        // Enqueue a sunset-admin-script script.            
+        wp_enqueue_script( 'sunset-admin-script');
+
+    } else  if('sunset_page_sunset_options_css_settings' == $hook)  {
+        // call css to style the ace editor
+        wp_enqueue_style(
+            'ace',
+            get_template_directory_uri() . '/css/sunset.ace.css', // URL to the stylesheet
+            [], // this deps para define any stylesheet that file depend on
+            '1.0.0', // this version num
+            'all'  // define the media that file support
+        );
+        //  calling ace editor library 
+        wp_enqueue_script(  
+            'ace', // unique name
+            get_template_directory_uri(  ) . '/js/ace/ace.js',// URL to the script
+            array('jquery'), // this library depend on it
+            '1.4.6',  // version 
+            true // in the footer
+        );
+        // here i will call the editor into the sub-page
+        wp_enqueue_script(  
+            'sunset-custom-css-script', // unique name
+            get_template_directory_uri(  ) . '/js/sunset.custom.css.js',// URL to the script
+            array('jquery'), // this library depend on it
+            '1.0.0',  // version 
+            true // in the footer
+        );
+    } else {  return ;  }     
 }
 
 

@@ -304,7 +304,8 @@ function sunset_custom_settings() {
     // register the Contact-Form activate_contact_form
     register_setting( 
         'sunset-custom-css-options', // this is the option group
-        'sunset_css',  // the name of the option to sanitize and save   
+        'sunset_css',  // the name of the option to sanitize and save  
+        'sunset_sanitize_custom_css' 
     ); 
 
     // Contact-Form  section    
@@ -464,8 +465,7 @@ function sunset_custom_background() {
 //  activate section call-back function
 function sunset_contact_section() {
     echo 'Activate and Deactivate the Built-in Contact-Form';
-}
- 
+} 
 
 // contact-Form field Call-back Function 
 function sunset_activate_contact_form(){
@@ -476,8 +476,7 @@ function sunset_activate_contact_form(){
             <input type="checkbox" id="activate_contact_form" name="activate_contact_form" value="1" '.$checked . ' />  
             </label>
         <br>';
-} 
-
+}  
 
 /*
     ***************************************************** 
@@ -492,15 +491,21 @@ function sunset_custom_css_section_callback() {
 
 // custom-css field Call-back Function 
 function sunset_custom_css_field_callback(){
-    $css =   get_option('sunset_css') ; // option name is the name of the register settings
-    
+    $css =   get_option('sunset_css') ; // option name is the name of the register settings 
     $css = empty( $css) ? '/* Sunset Custom Css */' :  $css;
+    // i will copy any css code i write and put it inside our custom css file
     echo '
-        <textarea placholder="Sunset Custom Css"> '. 
+        <div id="customCss"> '. 
             $css
-        .'</textarea>
+        .'</div>
+        <textarea id="sunset_css" name="sunset_css" style="display:none; visibility:hidden">' . $css .'</textarea>
         <br>';
 } 
+// custom-css sanitize the input 
+function sunset_sanitize_custom_css($input){
+     $output =  esc_textarea( $input );
+     return $output;
+}
 
 
 /*
