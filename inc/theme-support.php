@@ -5,7 +5,9 @@
  * THEME SUPPORT OPTIONS
  * ======================================
  */
-$options = get_option('post_formats') ;
+
+$options = get_option('post_formats') ;// option asign the this name
+// formate types of the theme
 $formats = array(
                     'aside',
                     'gallery',
@@ -18,11 +20,14 @@ $formats = array(
                     'chat'
                 );
 $output = [];
+
+// formats that checked in and save it to outputs
 foreach($formats as $format){
     $output[]  = ( @$options[$format] == 1  ?  $format : '' );
 }
+
 if (!empty($options)){
-    add_theme_support( 'post-formats',  $output); 
+    add_theme_support('post-formats',  $output); 
 }
 
 
