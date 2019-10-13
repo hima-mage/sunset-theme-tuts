@@ -97,6 +97,11 @@ add_action(
         '1.0.0', // this version num
         'all'  // define the media that file support
     );
+    // load my fonts
+    wp_enqueue_style(
+        'raleway', // unique name of the stylesheet
+        "https://fonts.googleapis.com/css?family=Raleway&display=swap"
+    );
     // i will work in how to load jquery file 
     // here i unregister jquery
     wp_deregister_script( 'jquery' );
