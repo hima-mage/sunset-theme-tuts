@@ -71,3 +71,55 @@ add_action(
     'admin_enqueue_scripts', //Enqueue scripts for all admin pages.
     'sunset_load_admin_scripts' // function name
 );
+
+
+/**
+ * @package sunset-theme
+ * ======================================
+ * FRONT-END ENQUEUE FUNCTIONS
+ * ======================================
+ */
+
+ function sunset_load_frontend_scripts(){
+    //  load bootstrap css file
+    wp_enqueue_style(
+        'bootstrap', // unique name of the stylesheet
+        get_template_directory_uri() . '/css/bootstrap.min.css', // URL to the stylesheet
+        [], // this deps para define any stylesheet that file depend on
+        '4.3.1', // this version num
+        'all'  // define the media that file support
+    );
+    // load my standard css file
+    wp_enqueue_style(
+        'sunset', // unique name of the stylesheet
+        get_template_directory_uri() . '/css/sunset.css', // URL to the stylesheet
+        [], // this deps para define any stylesheet that file depend on
+        '1.0.0', // this version num
+        'all'  // define the media that file support
+    );
+    // i will work in how to load jquery file 
+    // here i unregister jquery
+    wp_deregister_script( 'jquery' );
+    // register jquery v3.4.1
+    wp_register_script(
+        'jquery',// unique name of the js script
+        get_template_directory_uri() . '/js/jquery.js', // URL to the js file
+        false, // this deps para define any stylesheet that file depend on
+        '3.4.1', // this version num
+        true  // define the media that file support
+    );
+    // load jquary
+    wp_enqueue_script( 'jquery');
+    //  load bootstrap js file
+    wp_enqueue_script(
+        'bootstrap',// unique name of the js script
+        get_template_directory_uri() . '/js/bootstrap.min.js', // URL to the js file
+        ['jquery'], // this deps para define any stylesheet that file depend on
+        '4.3.1', // this version num
+        true  // define the media that file support
+    );
+ }
+ add_action( 
+     'wp_enqueue_scripts', // this the hook for the add the scripts of js/css
+     'sunset_load_frontend_scripts' // name of the function
+ );
